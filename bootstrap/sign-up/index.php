@@ -73,7 +73,7 @@
 
   <main class="px-3">
     <h1><b>About CoVac</b></h1>
-    <p class="lead"><b>Register for Covid Vaccine with CoVac. For all Malaysian resident and citizens</b></p>
+    <p class="lead"><b>Register here for Covid Vaccine with CoVac. For all Malaysian resident and citizens</b></p>
     <p class="lead">
       <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
     </p>
