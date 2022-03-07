@@ -1,4 +1,5 @@
-<?php include('conn.php') ?>
+<?php include('conn.php')?> 
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,7 +11,11 @@
     <title>Sign up</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
-
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     
 
     <!-- Bootstrap core CSS -->
@@ -43,7 +48,7 @@
   style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.3) 100%), 
   url(vac.jpg)">
   <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" >
-    <header class="mb-auto">
+  <header class="mb-auto">
     <div>
       <h3 class="float-md-start mb-0">CoVac</h3>
       <nav class="nav nav-masthead justify-content-center float-md-end">
@@ -52,48 +57,28 @@
         <a class="nav-link" href="signin.php">Login</a>
       </nav>
     </div>
-  </header>
-    
-<main class="form-signin">
-  <form action="signup.php" method="POST" >
+    </header>
+   
+
+    <main class="form-signin">
+  <form action="signup.php" method="POST">
   <?php include('errors.php'); ?>
-  
-    <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
     
-    <div class="form-floating">
-      <input type="text" name="fullname" class="form-control" id="floatingInput" placeholder="Full name">
-      <label for="floatingInput" >Fullname</label>
-    </div>
+    <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
 
     <div class="form-floating">
-      <input type="text" name="username" class="form-control" id="floatingInput" placeholder="Username">
-      <label for="floatingInput" >Username</label>
-    </div>
-
-    <div class="form-floating">
-      <input type="email"  name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com" require>
       <label for="floatingInput">Email address</label>
     </div>
+  
     <div class="form-floating">
-      <input type="password"  name="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password" require>
       <label for="floatingPassword">Password</label>
     </div>
+
     <div class="form-floating">
-      <input type="text" name="phoneno" class="form-control" id="floatingInput" placeholder="Phone number">
-      <label for="floatingInput" >Phone Number</label>
-    </div>
-    <div class="form-floating">
-      <input type="date" name="dateofbirth" class="form-control" id="floatingInput" placeholder="date of birth">
-      <label for="floatingInput" >Date of birth</label>
-    </div>
-    <div class="form-floating">
-      <input type="text" name="gender" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Gender</label>
-      
-    </div>
-    <div class="form-floating">
-      <input type="text" name="passport" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword" >Passport/IC</label>
+      <input type="tel" class="form-control" id="floatingInput" name="phoneno"  placeholder="01233445566" require>
+      <label for="floatingInput">Phone number</label>
     </div>
 
     <div class="checkbox mb-3">
@@ -101,7 +86,7 @@
         <input type="checkbox" value="remember-me"> Remember me
       </label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" name="submit" type="submit">Sign in</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit" name="submit">Sign up</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
   </form>
 </main>

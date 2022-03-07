@@ -17,14 +17,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>User Page</title>
+    <title>COVID-19 Vaccination Centers</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
-
+    <!--map sdk -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Buy COVID-19 vaccination &amp; Find COVID-19 Vaccination Clinics near you">
+    <meta name="keywords" content="Vaccine, vaccination, COVID-19, coronavirus">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="./leaflet/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+    <link rel="stylesheet" href="dstyle.css" type="text/css">
+    <!-- Custom styles for this template -->
+    <link href="headers.css" rel="stylesheet">
+    <script>
     
-
+    </script>
     <!-- Bootstrap core CSS -->
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -44,12 +56,6 @@
       }
     </style>
 
-    
-    <!-- Custom styles for this template -->
-    <link href="headers.css" rel="stylesheet">
-  </head>
-  <body>
-    
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="bootstrap" viewBox="0 0 118 94">
     <title>Bootstrap</title>
@@ -74,17 +80,17 @@
   </symbol>
 </svg>
 
-<main>
-
+</head>
   <header class="p-3 mb-3 border-bottom">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
           <h3><b>CoVac</b></h3>
         </a>
-
+        
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 link-secondary">Search Center</a></li>
+        <li><a href="user.php" class="nav-link px-2 llink-dark">Dashboard</a></li>
+          <li><a href="#" class="nav-link px-2 link-dark">Search Center</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">Book Appointment</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">contact Us</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">FAQ</a></li>
@@ -105,18 +111,31 @@
             
             <li><a class="dropdown-item" href="#">Settings</a></li>
             <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
+            <li><hr class="dropdown-divider" href="signin.php">Log out</li>
             <li><a class="dropdown-item" href="search.php?logout='1'">Sign out</a></li>
             <?php endif ?>
           </ul>
         </div>
       </div>
     </div>
-  </header>
-
-
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-
-      
-  </body>
+    </header>
+    <body>
+    <div class="sidebar">
+            <div id="loading-bar-spinner" class="spinner">
+                <div class="spinner-icon"></div>
+    </div>
+    <input id="myInput" type="text" placeholder="Search..">
+    <br><br>
+            <h1 class="sidebar-title-header">COVID-19 Vaccination Center</h1>
+            <div id="sidebar" class="sidebar-container"></div>
+        </div>
+        <div id="map" class="map"></div>
+        <script src="./leaflet/leaflet-src.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+        <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+        <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
+        <script src="data.js"></script>
+        <script src="script.js" type="text/javascript"></script>
+   </body>
 </html>
+
