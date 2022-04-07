@@ -18,7 +18,7 @@ var clinicIcon;
 var distance;
 var distanceArray = [];
 var redIcon = L.icon({
-    iconUrl: "https://img.icons8.com/fluency/48/fa314a/street-view.png",
+    
     iconSize:     [50, 50], // size of the icon
     iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
@@ -109,8 +109,8 @@ data.forEach((clinic)=>{
     <b>${clinic.clinic_name}
     
     <div class ='clinic-street-text'> <br> ${clinic.clinic_street} </div>
-    <div class= 'popupmarker-directions-button'> <a class= popupmarker-directions-link href=${clinic.clinic_link} target= "_blank"> Get Directions </a> <img class= "popupmarker-location-icon" src ="https://img.icons8.com/ios-filled/50/ffffff/europe.png" aria-hidden="true"> </div>
-    <div class= 'popupmarker-booking-button'> <a class= popupmarker-booking-link href=${clinic.booking_link} target= "_blank"> Book Now </a> <img class= "popupmarker-send-icon" src ="https://img.icons8.com/ios-glyphs/30/ffffff/filled-sent.png" aria-hidden="true"> </div>
+    <div class= 'popupmarker-directions-button'> <a class= popupmarker-directions-link href=${clinic.clinic_link} target= "_blank"> Get Directions </a> </div>
+    <div class= 'popupmarker-booking-button'> <a class= popupmarker-booking-link href=${clinic.booking_link} target= "_blank" href="book-appoint.php"> Book Now </a>  </div>
   </div>
   `)
 
@@ -151,17 +151,17 @@ function buildClinicList(data, userlatlon){
 
                     <div class= "sidebar-distance-text">
                       &nbspDistance ${data[i].distance}KM
-                      <img class= "send-icon" src ="https://img.icons8.com/ios-filled/50/fa314a/marker-d.png" aria-hidden="true">
+                      
                     </div>
                     <div class= "sidebar-street-text">Vaccine Type: ${data[i].vac_type}</div>
                     <div class= "sidebar-street-text">${data[i].clinic_street}</div>
 
                     <div class= "sidebar-location-button">
-                      <button type="button" class="btn-clinic-link" onclick="trackEventMap('getDirectionButton')"> <a class= sidebar-directions-link href=${data[i].clinic_link} target= "_blank" > Get Directions </a> <img class= "popupmarker-location-icon" src ="https://img.icons8.com/ios-filled/50/ffffff/europe.png" aria-hidden="true"> </button>
+                      <button type="button" class="btn-clinic-link" onclick="trackEventMap('getDirectionButton')"> <a class= sidebar-directions-link href=${data[i].clinic_link} target= "_blank"> Get Directions </a>  </button>
                     </div>
 
                     <div class= "sidebar-booking-button">
-                      <button  type="button" class="btn-clinic-booking-link" onclick="trackEventMap('bookNowButton')"> <a class= sidebar-booking-link href=${data[i].booking_link} target= "_blank" > Book Now </a> <img class= "popupmarker-send-icon" src ="https://img.icons8.com/ios-glyphs/30/ffffff/filled-sent.png" aria-hidden="true"></button>
+                    <button type="button" class="btn-booking-link" onclick="trackEventMap('getDirectionButton')"> <a class= sidebar-booking-link href=${data[i].booking_link} target= "_blank" href="book-appoint.php"> Book now </a>  </button>
                       </button>
                       </div>
                 </div>
@@ -206,11 +206,11 @@ function buildClinicList(data, userlatlon){
                     <div class= "sidebar-street-text">${data[i].clinic_street}</div>
 
                     <div class= "sidebar-location-button">
-                      <button type="button" class="btn-clinic-link" onclick="trackEventMap('getDirectionButton')"> <a class= "sidebar-directions-link" href=${data[i].clinic_link} target= "_blank"> Get Directions </a> <img class= "popupmarker-location-icon" src ="https://img.icons8.com/ios-filled/50/ffffff/europe.png" aria-hidden="true"> </button>
+                      <button type="button" class="btn-clinic-link" onclick="trackEventMap('getDirectionButton')"> <a class= "sidebar-directions-link" href=${data[i].clinic_link} target= "_blank"> Get Directions </a>  </button>
                     </div>
 
                     <div class= "sidebar-booking-button">
-                      <button  type="button" class="btn-clinic-booking-link" onclick="trackEventMap('bookNowButton')"> <a class= "sidebar-booking-link" href=${data[i].booking_link} target= "_blank"> Book Now </a> <img class= "popupmarker-send-icon" src ="https://img.icons8.com/ios-glyphs/30/ffffff/filled-sent.png" aria-hidden="true"></button>
+                      <button  type="button" class="btn-clinic-booking-link" onclick="trackEventMap('bookNowButton')"> </button>
                       </button>
                       </div>
                 </div>
@@ -280,12 +280,12 @@ ga('send', 'event', "EngMedicineTrack", event, 'Vaccination Clinics Map');
 //filter by vaccine
 function myFunction() {
     var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("myInput");
+    input = document.getElementById("vac_type");
     filter = input.value.toUpperCase();
-    ul = document.getElementById("myUL");
-    li = ul.getElementsByTagName("li");
+    ul = document.getElementById("vac_type");
+    li = ul.getElementsByTagName("vac_type");
     for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("a")[0];
+        a = (data[i].vac_type).getElementsByTagName("a")[0];
         txtValue = a.textContent || a.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
             li[i].style.display = "";

@@ -90,8 +90,8 @@
         
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a href="user.php" class="nav-link px-2 llink-dark">Dashboard</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Search Center</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Book Appointment</a></li>
+          <li><a href="search.php" class="nav-link px-2 link-dark">Search Center</a></li>
+          <li><a href="book-appoint.php" class="nav-link px-2 link-dark">Book Appointment</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">contact Us</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">FAQ</a></li>
         </ul>

@@ -91,7 +91,7 @@
         
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a href="user.php" class="nav-link px-2 llink-dark">Dashboard</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Search Center</a></li>
+          <li><a href="search.php" class="nav-link px-2 link-dark">Search Center</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">Book Appointment</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">contact Us</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">FAQ</a></li>
@@ -124,7 +124,8 @@
     <!-- Tab links -->
 <div class="tab">
   <button class="tablinks" onclick="openCity(event, 'profile')">Profile</button>
-  <button class="tablinks" onclick="openCity(event, 'med_hist')">Medical History</button>
+  <button class="tablinks" onclick="openCity(event, 'med_hist')">Vaccine recommender</button>
+  <button class="tablinks" onclick="openCity(event, 'appointment')">Appointment</button>
  
 </div>
 
@@ -144,6 +145,7 @@ if ($conn->connect_error) {
 }
 
 $sql = "SELECT email, phoneno FROM signup";
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -160,65 +162,46 @@ $conn->close();
 </div>
 
 <div id="med_hist" class="tabcontent">
-  <h3>Medical History</h3>
-  <form action="med_hist.php " method="POST">
+  <h3>Recommend vaccine</h3>
   
-<!-- Text Input -->
-    <label>Name: </label> 
-    <input maxlength="8" name="name" size="20" type="text">
-    <br><br>
+    <form method="get" action="http://127.0.0.1:5000/">
+    <button type="submit" class="btn btn-primary" id="btn">Find out!</button>
+</form>
 
-    <label>Age: </label> 
-    <input maxlength="2" name="age" size="20" type="number">
-    <br><br>
-  
-
-    <!-- Check boxes -->
-    <label>check the conditions that apply to you</label><br>
-    <input name="Asthama" type="checkbox"> Asthama
-    <input name="Cancer" type="checkbox">Cancer
-    <input name="cardiac" type="checkbox">Cardiac Disease 
-    <input name="none" type="checkbox">None
-    <br><br>
-  
-    <!-- Radio buttons -->
-    <label>Do you have allergies to latex, food, medications, or 
-      vaccine components? (such as eggs, thimerosal, gelatin, neomycles, phenol, or bovine protien)
-    </label><br>
-    
-    <input name="allergies" type="radio" value="yes">Yes
-    <input name="allergies" type="radio" value="no">No
-    <br><br>
-
-    <label>In the last 14 days have you contacted with covid?
-    </label><br>
-    
-    <input name="covid" type="radio" value="yes">Yes
-    <input name="covid" type="radio" value="no">No
-    <br><br>
-
-    <label>Have you ever tested positive for covid
-    </label><br>
-    
-    <input name="cov_det" type="radio" value="yes">Yes
-    <input name="cov_det" type="radio" value="no">No
-    <br><br>
-  
-    <!-- Using Option Lists - Select single value -->
-    <label>Do you use or have any history of using tobacco
-    </label><br>
-    
-    <input name="tobacco" type="radio" value="yes">Yes
-    <input name="tobacco" type="radio" value="no">No
-    <br><br>
-  
-  
-  
-    <input type="submit"></form>
-    
 </div>
+<div id="appointment" class="tabcontent">
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "covac";
 
-   
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT date, time, location FROM appointment";
+
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  // output data of each row
+  while($row = $result->fetch_assoc()) {
+    echo"Date: " . $row["date"]. "<br> 
+         Time:" . $row["time"]. "<br>
+         Location:" . $row["location"]. "<br>
+         ";
+  }
+} else {
+  echo "0 results";
+}
+$conn->close();
+?>
+
+</div>
 <script>
     function openCity(evt, cityName) {
   // Declare all variables
