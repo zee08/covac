@@ -119,23 +119,345 @@
       </div>
     </div>
     </header>
-    <body>
-    <div class="sidebar">
-            <div id="loading-bar-spinner" class="spinner">
-                <div class="spinner-icon"></div>
-    </div>
-    <input id="myInput" type="text" placeholder="Search..">
-    <br><br>
-            <h1 class="sidebar-title-header">COVID-19 Vaccination Center</h1>
-            <div id="sidebar" class="sidebar-container"></div>
-        </div>
-        <div id="map" class="map"></div>
-        <script src="./leaflet/leaflet-src.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-        <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
-        <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
-        <script src="data.js"></script>
-        <script src="script.js" type="text/javascript"></script>
-   </body>
-</html>
+    <style>
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+    #map {
+      height: 100%;
+  margin: 0px;
+  padding: 0px;
+  position:relative;
+  right: -300px;
+  top:-720px;
+  width: 50%;
 
+    }
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height:100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* TODO: Step 4A1: Make a generic sidebar */
+    /* Styling for an info pane that slides out from the left. 
+     * Hidden by default. */
+    #panel {
+      background-color: rgb(255, 255, 255);
+  height: 100%;
+  left: 0;
+  overflow-x: hidden;
+ 
+  padding:15px;
+  position: relative;
+  top: -8px;
+  width: calc(300px - 30px);
+
+      
+    }
+
+    .open {
+      width: 250px;
+    }
+
+    /* Styling for place details */
+    .hero {
+      width: 100%;
+      height: auto;
+      max-height: 166px;
+      display: block;
+    }
+
+    .place,
+    p {
+      font-family: 'open sans', arial, sans-serif;
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .details {
+      color: darkslategrey;
+    }
+
+    a {
+      text-decoration: none;
+      color: cadetblue;
+    }
+    /* autcomplete css */
+    #pac-card {
+      background-color: #fff;
+      border-radius: 2px 0 0 2px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      box-sizing: border-box;
+      font-family: Roboto;
+      margin: 10px 10px 0 0;
+      -moz-box-sizing: border-box;
+      outline: none;
+    }
+    
+    #pac-container {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      margin-right: 12px;
+    }
+    
+    #pac-input {
+      background-color: #fff;
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: 300;
+      margin-left: 12px;
+      padding: 0 11px 0 13px;
+      text-overflow: ellipsis;
+      width: 400px;
+    }
+    
+    #pac-input:focus {
+      border-color: #4d90fe;
+    }
+    
+    #title {
+      color: #fff;
+      background-color: #acbcc9;
+      font-size: 18px;
+      font-weight: 400;
+      padding: 6px 12px;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+  </style>
+</head>
+
+<body>
+  
+  <!-- TODO: Step 4A2: Add a generic sidebar -->
+  <!-- The slide-out panel for showing place details -->
+  <div id="panel"></div>
+
+  <!-- Map appears here -->
+  <div id="map"></div>
+  <!--search box-->
+  
+
+  <script>
+    /* Note: This example requires that you consent to location sharing when
+     * prompted by your browser. If you see the error "Geolocation permission
+     * denied.", it means you probably did not give permission for the browser * to locate you. */
+    let pos;
+    let map;
+    let bounds;
+    let infoWindow;
+    let currentInfoWindow;
+    let service;
+    let infoPane;
+    function initMap() {
+      // Initialize variables
+      bounds = new google.maps.LatLngBounds();
+      infoWindow = new google.maps.InfoWindow;
+      currentInfoWindow = infoWindow;
+      /* TODO: Step 4A3: Add a generic sidebar */
+      infoPane = document.getElementById('panel');
+
+      // Try HTML5 geolocation
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: pos,
+            zoom: 15
+          });
+          bounds.extend(pos);
+
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Location found.');
+          infoWindow.open(map);
+          map.setCenter(pos);
+
+          // Call Places Nearby Search on user's location
+          getNearbyPlaces(pos);
+        }, () => {
+          // Browser supports geolocation, but user has denied permission
+          handleLocationError(true, infoWindow);
+        });
+      } else {
+        // Browser doesn't support geolocation
+        handleLocationError(false, infoWindow);
+      }
+    }
+
+    // Handle a geolocation error
+    function handleLocationError(browserHasGeolocation, infoWindow) {
+      
+      pos = { lat: 3.0738, lng: 101.5183 };
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: pos,
+        zoom: 15
+      });
+
+      // Display an InfoWindow at the map center
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+        'Geolocation permissions denied. Using default location.' :
+        'Error: Your browser doesn\'t support geolocation.');
+      infoWindow.open(map);
+      currentInfoWindow = infoWindow;
+
+      // Call Places Nearby Search on the default location
+      getNearbyPlaces(pos);
+    }
+
+    // Perform a Places Nearby Search Request
+    function getNearbyPlaces(position) {
+      let request = {
+        location: position,
+        rankBy: google.maps.places.RankBy.DISTANCE,
+        keyword: 'covid vaccine centre'
+      };
+
+      service = new google.maps.places.PlacesService(map);
+      service.nearbySearch(request, nearbyCallback);
+    }
+
+    // Handle the results (up to 20) of the Nearby Search
+    function nearbyCallback(results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        createMarkers(results);
+      }
+    }
+
+    // Set markers at the location of each place result
+    function createMarkers(places) {
+      places.forEach(place => {
+        let marker = new google.maps.Marker({
+          position: place.geometry.location,
+          map: map,
+          title: place.name
+          
+        });
+
+        /* TODO: Step 4B: Add click listeners to the markers */
+        // Add click listener to each marker
+        google.maps.event.addListener(marker, 'click', () => {
+          let request = {
+            placeId: place.place_id,
+            fields: ['name', 'formatted_address', 'geometry', 'rating',
+              'website', 'photos']
+          };
+
+          /* Only fetch the details of a place when the user clicks on a marker.
+           * If we fetch the details for all place results as soon as we get
+           * the search response, we will hit API rate limits. */
+          service.getDetails(request, (placeResult, status) => {
+            showDetails(placeResult, marker, status)
+          });
+        });
+
+        // Adjust the map bounds to include the location of this marker
+        bounds.extend(place.geometry.location);
+      });
+      /* Once all the markers have been placed, adjust the bounds of the map to
+       * show all the markers within the visible area. */
+      map.fitBounds(bounds);
+    }
+
+    /* TODO: Step 4C: Show place details in an info window */
+    // Builds an InfoWindow to display details above the marker
+    function showDetails(placeResult, marker, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        let placeInfowindow = new google.maps.InfoWindow();
+        let rating = "None";
+        if (placeResult.rating) rating = placeResult.rating;
+        placeInfowindow.setContent('<div><strong>' + placeResult.name +
+          '</strong><br>' + 'Rating: ' + rating + '<br><a href="book-appoint.php">Book appointment</a></div>');
+        placeInfowindow.open(marker.map, marker);
+        currentInfoWindow.close();
+        currentInfoWindow = placeInfowindow;
+        showPanel(placeResult);
+      } else {
+        console.log('showDetails failed: ' + status);
+      }
+    }
+
+    /* TODO: Step 4D: Load place details in a sidebar */
+    // Displays place details in a sidebar
+    function showPanel(placeResult) {
+      // If infoPane is already open, close it
+      if (infoPane.classList.contains("open")) {
+        infoPane.classList.remove("open");
+      }
+
+      // Clear the previous details
+      while (infoPane.lastChild) {
+        infoPane.removeChild(infoPane.lastChild);
+      }
+
+      /* TODO: Step 4E: Display a Place Photo with the Place Details */
+      // Add the primary photo, if there is one
+      if (placeResult.photos) {
+        let firstPhoto = placeResult.photos[0];
+        let photo = document.createElement('img');
+        photo.classList.add('hero');
+        photo.src = firstPhoto.getUrl();
+        infoPane.appendChild(photo);
+      }
+      if (placeResult.distanceText) {
+    let distanceText = document.createElement('p');
+    distanceText.classList.add('distanceText');
+    distanceText.textContent = store.distanceText;
+    panel.appendChild(distanceText);
+  }
+
+      // Add place details with text formatting
+      let name = document.createElement('h1');
+      name.classList.add('place');
+      name.textContent = placeResult.name;
+      infoPane.appendChild(name);
+      if (placeResult.rating) {
+        let rating = document.createElement('p');
+        rating.classList.add('details');
+        rating.textContent = `Rating: ${placeResult.rating} \u272e`;
+        infoPane.appendChild(rating);
+      }
+      let address = document.createElement('p');
+      address.classList.add('details');
+      address.textContent = placeResult.formatted_address;
+      infoPane.appendChild(address);
+      if (placeResult.website) {
+        let websitePara = document.createElement('p');
+        let websiteLink = document.createElement('a');
+        let websiteUrl = document.createTextNode(placeResult.website);
+        websiteLink.appendChild(websiteUrl);
+        websiteLink.title = placeResult.website;
+        websiteLink.href = placeResult.website;
+        websitePara.appendChild(websiteLink);
+        infoPane.appendChild(websitePara);
+      }
+      if (placeResult.distance) {
+    let distanceText = document.createElement('p');
+    distanceText.classList.add('distanceText');
+    distanceText.textContent = store.distanceText;
+    panel.appendChild(distanceText);
+  }
+
+      // Open the infoPane
+      infoPane.classList.add("open");
+    }
+    //autocomplete search 
+    
+  </script>
+
+  <!-- TODO: Step 3A, Load the Places Library -->
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSSqZsPXd-Nzu0Cy1GASwzcnZOnpNEcXA&libraries=places&callback=initMap"></script>
+</body>
+
+    
+</html>

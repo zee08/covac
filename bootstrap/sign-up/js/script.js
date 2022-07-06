@@ -35,9 +35,8 @@ function buildMap(){
   // alert("Start to build map")
     map = L.map('map', {
       center: [4.6433122994612415, 102.31279681938376],
-      zoom: 12,
-      // minZoom: 1.5,
-     //  maxZoom: 1.5
+      minZoom: zoom - 3,
+  maxZoom: zoom + 3,
     });
 
     map.locate({setView: true})
@@ -54,8 +53,8 @@ function buildMap(){
     });
 
     // Control 1: This add the OpenStreetMap background tile
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     // Control 2: This add a scale to the map
@@ -102,14 +101,13 @@ data.forEach((clinic)=>{
   // console.log(clinic)
   // console.log(clinic.clinic_coordinates, clinic.clinic_name, clinic.clinic_street)
   // console.log(latlongSearch)
-  var marker = L.marker(clinic.clinic_coordinates,{icon: clinicIcon}).addTo(map);
+  var marker = L.marker([clinic.latitude, clinic.longitude],{icon: clinicIcon}).addTo(map);
   marker.bindPopup(`
   <div class= 'popupmarker-text'>
-    <b>${clinic.clinic_name}
+    <b>${clinic.ppv_name}
     
-    <div class ='clinic-street-text'> <br> ${clinic.clinic_street} </div>
-    <div class= 'popupmarker-directions-button'> <a class= popupmarker-directions-link href=${clinic.clinic_link} target= "_blank"> Get Directions </a> </div>
-    <div class= 'popupmarker-booking-button'> <a class= popupmarker-booking-link href=${clinic.booking_link} target= "_blank" href="book-appoint.php"> Book Now </a>  </div>
+    <div class ='clinic-street-text'> <br> ${clinic.state} </div>
+    
   </div>
   `)
 
@@ -126,7 +124,7 @@ function buildClinicList(data, userlatlon){
 
     if(userlatlon != 0){
       var temp_userSearchlatlong = [userlatlon.lat, userlatlon.lng]
-      var temp_cliniclatlong = item.clinic_coordinates
+      var temp_cliniclatlong = [item.latitude, item.longitude]
       distance = haversineDistance(temp_userSearchlatlong, temp_cliniclatlong)
       item.distance=distance
       }
@@ -146,13 +144,13 @@ function buildClinicList(data, userlatlon){
       html+=`<div class="sidebar-item">
                 
                 <div class="sidebar-item-text">
-                    <h2 class= "sidebar-clinic-text">${data[i].clinic_name}</h2>
+                    <h2 class= "sidebar-clinic-text">${data[i].ppv_name}</h2>
                     <div class= "sidebar-distance-text">
                       &nbspDistance ${data[i].distance}KM
                       
                     </div>
                     <div class= "sidebar-street-text">Vaccine Type: ${data[i].vac_type}</div>
-                    <div class= "sidebar-street-text">${data[i].clinic_street}</div>
+                    <div class= "sidebar-street-text">${data[i].state}</div>
                     <div class= "sidebar-location-button">
                       <button type="button" class="btn-clinic-link" onclick="trackEventMap('getDirectionButton')"> <a class= sidebar-directions-link href=${data[i].clinic_link} target= "_blank"> Get Directions </a>  </button>
                     </div>
@@ -177,7 +175,7 @@ function buildClinicList(data, userlatlon){
 
     if(userlatlon != 0){
       var temp_userSearchlatlong = [userlatlon.lat, userlatlon.lng]
-      var temp_cliniclatlong = item.clinic_coordinates
+      var temp_cliniclatlong = [item.latitude, item.longitude]
       distance = haversineDistance(temp_userSearchlatlong, temp_cliniclatlong)
       item.distance=distance
       }
@@ -197,8 +195,8 @@ function buildClinicList(data, userlatlon){
       html+=`<div class="sidebar-item">
                 
                 <div class="sidebar-item-text">
-                    <h2 class= "sidebar-clinic-text">${data[i].clinic_name}</h2>
-                    <div class= "sidebar-street-text">${data[i].clinic_street}</div>
+                    <h2 class= "sidebar-clinic-text">${data[i].ppv_name}</h2>
+                    <div class= "sidebar-street-text">${data[i].state}</div>
                     <div class= "sidebar-location-button">
                       <button type="button" class="btn-clinic-link" onclick="trackEventMap('getDirectionButton')"> <a class= "sidebar-directions-link" href=${data[i].clinic_link} target= "_blank"> Get Directions </a>  </button>
                     </div>

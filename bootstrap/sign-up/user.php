@@ -145,32 +145,42 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT email, phoneno FROM signup";
+$sql = "SELECT email, phoneno FROM signup" ;
 
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
   // output data of each row
   while($row = $result->fetch_assoc()) {
-    echo"email: " . $row["email"]. "<br>  phone no:" . $row["phoneno"]. "<br>";
-  }
-} else {
-  echo "0 results";
-}
-$conn->close();
+    ?>
+		<form actions="" method="POST">
+      
+	<label ><b>Email</b></label><br>
+	<input type="text" name="date" readonly="readonly" value="<?php echo $row['email'] ?>"/><br>
+	<label ><b>Phone Number</b></label><br>
+	<input type="text" name="time" readonly="readonly" value="<?php echo $row['phoneno'] ?>"/><br>
+	
+	<?php
+  }}
 ?>
 
+
 </div>
+
+
 
 <div id="med_hist" class="tabcontent">
-  <h3>Recommend vaccine</h3>
-  
-    <form method="get" action="http://127.0.0.1:5000/">
-    <button type="submit" class="btn btn-primary" id="btn">Find out!</button>
-</form>
+  <h3>Recommend vaccine </h3>
+  <a href="http://127.0.0.1:5000/" target="_blank"><h3><b> Find out</h3></a>
+    
+    <!-- <button type="submit" class="btn btn-primary" id="btn">  Find out!</button> -->
 
+    
 </div>
 <div id="appointment" class="tabcontent">
+
+<div class="column">
+	<div class="container">
 <?php
 $servername = "localhost";
 $username = "root";
@@ -184,24 +194,36 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT date, time, location FROM appointment";
+$sql = "SELECT date, time, location, vaccine, status FROM appointment";
 
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
   // output data of each row
   while($row = $result->fetch_assoc()) {
-    echo"Date: " . $row["date"]. "<br> 
-         Time:" . $row["time"]. "<br>
-         Location:" . $row["location"]. "<br>
-         ";
-  }
-} else {
-  echo "0 results";
+    ?>
+		<form actions="" method="POST">
+    <h3>Appointment Details</h3><br>
+	<label ><b>Date</b></label><br>
+	<input type="text" name="date" readonly="readonly" value="<?php echo $row['date'] ?>"/><br>
+	<label ><b>Time</b></label><br>
+	<input type="text" name="time" readonly="readonly" value="<?php echo $row['time'] ?>"/><br>
+	<label ><b>Centre</b></label><br>
+	<input type="text" name="type" readonly="readonly" value="<?php echo $row['location'] ?>"/><br>
+	<label ><b>Vaccine</b></label><br>
+	<input type="text" name="vaccine" readonly="readonly" value="<?php echo $row['vaccine'] ?>"/><br>
+  <label ><b>Status</b></label><br>
+	<input type="text" name="status" readonly="readonly" value="<?php echo $row['status'] ?>"/><br>
+	
+	<?php
+    
+} 
 }
-$conn->close();
+
 ?>
 
+</div>
+</div>
 </div>
 <script>
     function openCity(evt, cityName) {

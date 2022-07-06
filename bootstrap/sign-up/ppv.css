@@ -1,0 +1,377 @@
+body,html {
+	margin:0;
+	height:100%;
+	width:100%;
+	font-family: 'Nunito', sans-serif;
+	color: #3b3b3b;
+	background-color: hsl(355, 100%, 100%);
+	overflow: auto;
+	scroll-behavior: smooth;
+}
+
+
+/* Logo of site*/ 
+.D {
+	color: hsl(355, 80%, 50%);
+}
+
+.a {
+	color: #03A688;
+}
+
+.t {
+	color: #BFB41B;
+}
+
+.r {
+	color: #0460D9;
+}
+
+/** Base and fixed size for all small devices **/
+h1 {
+	font-size: 36px;
+	line-height: 48px;
+}
+h2 {
+	font-size: 28px;
+	line-height: 36px;
+}
+h3 {
+	font-size: 22px;
+	line-height: 24px;
+}
+h4 {
+	font-size: 22px;
+	line-height: 24px;
+	font-style: italic;
+}
+p {
+	font-size: 16px; 
+	line-height: 24px;
+}
+/**Fluid size for all screens, larger than 500px**/
+@media (min-width: 900px) {
+	h1 {
+		font-size: 4vw;
+		line-height: 48px;
+	}
+	h2 {
+		font-size: 3.5vw;
+		line-height: 36px;
+	}
+	h3 {
+		font-size: 3vw;
+		line-height: 24px;
+	}
+	h4 {
+		font-size: 3vw;
+		line-height: 24px;
+		font-style: italic;
+	}
+}
+/** You can do the same for a maximum size if you wish **/
+@media (min-width: 1200px) {
+	h1 {
+		font-size: 48px;
+		line-height: 72px;
+	}
+
+	h2 {
+		font-size: 36px;
+		line-height: 48px;
+	}
+
+	h3 {
+		font-size: 20px;
+		line-height: 36px;
+		font-weight: 700;
+	}
+
+	h4 {
+		font-size: 20px;
+		line-height: 36px;
+		font-style: italic;
+	}
+
+	p {
+		font-size: 1rem; 
+		line-height: 24px;
+	}
+}
+/* Navbar items */
+.navbar {
+	height: 88px;
+	font-size: 18px;
+	line-height: 28px;
+}
+
+.navbar-light .navbar-nav .active>.nav-link{
+    color: hsl(355, 80%, 50%);
+	text-decoration: underline;
+	font-weight: 900;
+}
+
+
+/* Main items */
+body {
+	backface-visibility: hidden;
+ 	perspective: 1000;
+ 	transform: translate3d(0,0,0);
+	display: grid;
+	grid-template-rows: 80px 1fr 1fr 73% 1fr 73% 36px;
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas:
+	"header header"
+	"intro intro"
+	"regMap regMap"
+	"content sidebar"
+	"ChoromapInfo ChoromapInfo"
+	"Chorocontent dashboard"
+	"footer footer"
+	;
+}
+
+.header {
+	grid-area: header;
+	background-color: hsl(169, 100%, 95%);
+}
+#D_hover:hover {
+	color: hsl(355, 80%, 50%);
+}
+.a_hover:hover {
+	color: #03A688;
+}
+
+.t_hover:hover {
+	color: #BFB41B;
+}
+
+#r_hover:hover {
+	color: #0460D9;
+}
+
+.intro {
+	grid-area: intro;
+	padding-top: 56px;
+	background-color: hsl(169, 100%, 95%);
+	height: 100vh;
+}
+
+.animatedheader {
+	display: inline-block;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.animatedheader:first-of-type {  
+	animation: showup 7s infinite;
+}
+
+.animatedheader:last-of-type {
+	width:0px;
+	animation: reveal 7s infinite;
+}
+
+#animated2 {
+	margin-left: 8px;
+}
+
+#animated2 h1 {
+	animation: color-change 5s infinite;
+	animation-direction: alternate-reverse;
+}
+
+@keyframes color-change {
+	0% { color: hsl(355, 80%, 50%); }
+	17% { color: #03A688; }
+	33% { color: #BFB41B; }
+	66% { color: #03A688; }
+	83% { color: #0460D9; }
+	100% { color: #BFB41B; }
+}
+.animatedheader:last-of-type span {
+	margin-left:-1000px;
+	animation: slidein 7s infinite;
+}
+
+@keyframes showup {
+	0% {opacity:0;}
+	20% {opacity:1;}
+	80% {opacity:1;}
+	100% {opacity:0;}
+}
+
+@keyframes slidein {
+	0% { margin-left:-100px; }
+	20% { margin-left:-100px; }
+	35% { margin-left:0px; }
+	100% { margin-left:0px; }
+}
+
+@keyframes reveal {
+	0% {opacity:0;width:0px;}
+	20% {opacity:1;width:0px;}
+	30% {width: 150px;}
+	80% {opacity:1;}
+	100% {opacity:0;width:150px;}
+}
+
+
+#mainmap_but, #choromap_but{
+	padding: 12px;
+	border-radius: 8px;
+	width: 200px;
+	height: 56px;
+	font-family: 'Nunito', sans-serif;
+	color: #fff;
+
+	background-color: hsl(169, 50%, 53%);
+	border: 3px solid hsl(169, 50%, 53%);
+	
+	margin-bottom: 24px;
+	margin-top: 80px;
+	transition: 0.3s;
+}
+
+#mainmap_but:hover, #choromap_but:hover {
+	box-shadow: 0 8px 12px 0 hsl(169, 100%, 17%, 0.23), 0 12px 40px 0 hsl(169, 100%, 17%, 0.27);
+}
+
+article {
+	padding: 8px;
+}
+
+#map {
+	height: 100%;
+	margin-left: 24px;
+	margin-right: 24px;
+	border-radius: 8px;
+	border: 3px solid hsla(169, 96%, 33%, 0.5);
+}
+
+.regMap {
+	grid-area: regMap;
+	text-align: center;
+	margin-top: 36px;
+}
+
+.sidebar {
+	color: #3b3b3b;
+	grid-area: sidebar;
+	padding: 12px;
+	background-color: hsla(170, 97%, 13%, 0.293);
+	overflow: auto;
+	margin-right: 24px;
+	background-color: hsl(169, 100%, 99%);
+	border-radius: 8px;
+	height: 100%;
+	border: 3px solid hsla(169, 96%, 33%, 0.5);
+}
+
+.content {
+	grid-area: content;
+}
+
+.sidebar img {
+    width: 30%;
+	height: 30%;
+	margin-bottom: 24px;
+}
+
+.randomizeButton {
+	height: 100px; /* easyButton's height default */
+	width: 100px;  /*  easyButton's width default */
+  }
+
+/**Choropleth Map **/
+.Choromap_info {
+	grid-area: ChoromapInfo;
+	text-align: center;
+	margin-top: 60px;
+}
+
+.ChoroContent {
+	grid-area: ChoroContent;
+	border-radius: 8px;
+}
+
+#choromap {
+	height: 100%;
+	margin-left: 24px;
+	margin-right: 24px;
+	border-radius: 8px;
+	border: 3px solid hsla(169, 96%, 33%, 0.5);
+}
+
+.dashboard {
+	grid-area: dashboard;
+	margin-right: 24px;
+	padding: 12px;
+	margin-bottom: 24px;
+	background-color: hsl(169, 100%, 99%);
+	border-radius: 12px;
+	height: 100%;
+	border: 3px solid hsla(169, 96%, 33%, 0.5);
+}
+
+/*button*/
+.sidebar-item {	
+	padding: 10px;	/* background-color: #333; */
+	float:left;
+	cursor:pointer;
+	color: #f6ecf8;
+	font-size: 1em;
+	border: 5px #3b3b3b;
+	background-color: #3b3b3b;
+	border-radius: 4px;
+}
+.sidebar-item:hover {
+	background-color: hsl(355, 80%, 50%);
+	-webkit-transition: all 0.4s;
+  	-moz-transition: all 0.4s;
+  	transition: all 0.4s;
+	
+}
+
+#CurrentStreetView {
+	margin-bottom: 100px;
+}
+
+.sidebar-item:active {
+	background: gainsboro;
+	transform: translateY(4px);
+  }
+
+  /* legend styles */
+.info {
+	padding: 6px 8px;
+	font: 14px/16px Arial, Helvetica, sans-serif;
+	background: white;
+	background: rgba(255,255,255,0.8);
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	border-radius: 5px;
+	min-width: 250px;
+	min-height: 50px;
+}
+.info h4 {
+	margin: 0 0 5px;
+	color: #777;
+}
+.legend {
+	line-height: 18px;
+	color: #555;
+}
+.legend i {
+	width: 18px;
+	height: 18px;
+	float: left;
+	margin-right: 8px;
+	opacity: 0.7;
+}
+
+/**Footer**/
+footer {
+	grid-area: footer;
+	margin-top: 12px;
+	text-align: center;
+}

@@ -43,7 +43,8 @@ if (isset($_POST['submit'])) {
 
   //register user if there are no errors in the form
   if (count($errors) == 0) {
-  	
+
+  
 
   	$query = "INSERT INTO signup ( email, password, phoneno) 
   			  VALUES('$email', '$password', '$phoneno')";
@@ -59,13 +60,9 @@ if (isset($_POST['login_user'])) {
     $email = mysqli_real_escape_string($db, $_POST['email']);
     $password = mysqli_real_escape_string($db, $_POST['password']);
   
-    if (empty($email)) {
-        array_push($errors, "Username is required");
+    if (empty($email) && empty($password)) {
+      echo'<script>alert("wrong email or password")</script>';
     }
-    if (empty($password)) {
-        array_push($errors, "Password is required");
-    }
-  
     if (count($errors) == 0) {
         
         $query = "SELECT * FROM signup WHERE email='$email' AND password='$password'";
@@ -77,7 +74,7 @@ if (isset($_POST['login_user'])) {
         }else {
           echo'<script>alert("wrong email or password")</script>';
         }
-    }
-  }
+      }
+}
   
   ?>

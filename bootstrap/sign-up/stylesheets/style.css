@@ -65,7 +65,7 @@ body{
   width: 291px;
 }
 
-.leaflet-popup-content-wrapper {
+/* .leaflet-popup-content-wrapper {
   border-radius: 13px;
   height: 330px;
   padding: 1px;
@@ -79,7 +79,7 @@ body{
   height: 321px;
   line-height: 1.4;
   margin: 13px 29px;
-}
+} */
 
 .popupmarker-text {
   width: 249px;

@@ -1,4 +1,3 @@
-
 var data = [
     {
         clinic_name: "Kumpulan Medic - PJ",

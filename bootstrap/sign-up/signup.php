@@ -78,6 +78,7 @@
 
     <div class="form-floating">
       <input type="tel" class="form-control" id="floatingInput" name="phoneno"  placeholder="01233445566" require>
+      <pattern="[0-9]{10,11}" title="please enter only numbers between 10 to 11 for mobile no."/>
       <label for="floatingInput">Phone number</label>
     </div>
 
