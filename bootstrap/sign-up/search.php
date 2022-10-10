@@ -456,7 +456,7 @@
 
   <!-- TODO: Step 3A, Load the Places Library -->
   <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSSqZsPXd-Nzu0Cy1GASwzcnZOnpNEcXA&libraries=places&callback=initMap"></script>
+  src="https://maps.googleapis.com/maps/api/js?&libraries=places&callback=initMap"></script>
 </body>
 
     

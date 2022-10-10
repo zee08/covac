@@ -70,7 +70,7 @@ if (isset($_POST['login_user'])) {
         if (mysqli_num_rows($results) == 1) {
           $_SESSION['username'] = $username=strstr($email,'@',true);;
           $_SESSION['success'] = "You are now logged in";
-          header('location: search.php');
+          header('location: user.php');
         }else {
           echo'<script>alert("wrong email or password")</script>';
         }
